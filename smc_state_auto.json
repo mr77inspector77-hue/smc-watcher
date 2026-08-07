@@ -3,20 +3,20 @@
     "veri_sorunu": false,
     "kaynak": "Coinbase",
     "vekil": false,
-    "veri_yas_dk": 12,
+    "veri_yas_dk": 4,
     "durum": "SHORT_HAZIRLIK",
-    "skor": 45,
+    "skor": 65,
     "yon": "short",
-    "fiyat": 65075.44,
+    "fiyat": 65105.7,
     "bias": "BEARISH",
     "bolge": "PREMIUM",
-    "eq": 64659.145000000004,
+    "eq": 64724.16,
     "aralik": [
-      64087.41,
-      65230.88
+      64099.35,
+      65348.97
     ],
-    "zaman_utc": "2026-08-07 12:15 UTC",
-    "guncelleme": "2026-08-07 12:27:10 UTC"
+    "zaman_utc": "2026-08-07 13:45 UTC",
+    "guncelleme": "2026-08-07 13:48:56 UTC"
   },
   "NQ1!": {
     "veri_sorunu": false,
@@ -26,35 +26,35 @@
     "durum": "SHORT_HAZIRLIK",
     "skor": 52,
     "yon": "short",
-    "fiyat": 29668.0,
+    "fiyat": 29762.75,
     "bias": "RANGE",
     "bolge": "PREMIUM",
-    "eq": 29463.75,
+    "eq": 29554.5,
     "aralik": [
       29241.25,
-      29686.25
+      29867.75
     ],
-    "zaman_utc": "2026-08-07 12:17 UTC",
-    "guncelleme": "2026-08-07 12:27:10 UTC"
+    "zaman_utc": "2026-08-07 13:38 UTC",
+    "guncelleme": "2026-08-07 13:48:56 UTC"
   },
   "ASELS": {
     "veri_sorunu": false,
     "kaynak": "Yahoo ASELS.IS",
     "vekil": false,
     "veri_yas_dk": 15,
-    "durum": "NOTR",
-    "skor": 40,
-    "yon": "short",
-    "fiyat": 357.0,
+    "durum": "LONG_HAZIRLIK",
+    "skor": 45,
+    "yon": "long",
+    "fiyat": 354.25,
     "bias": "BULLISH",
-    "bolge": "PREMIUM",
+    "bolge": "DISCOUNT",
     "eq": 355.0,
     "aralik": [
       341.5,
       368.5
     ],
-    "zaman_utc": "2026-08-07 12:12 UTC",
-    "guncelleme": "2026-08-07 12:27:10 UTC"
+    "zaman_utc": "2026-08-07 13:33 UTC",
+    "guncelleme": "2026-08-07 13:48:57 UTC"
   },
   "TUPRS": {
     "veri_sorunu": false,
@@ -64,34 +64,34 @@
     "durum": "NOTR",
     "skor": 25,
     "yon": "long",
-    "fiyat": 322.25,
+    "fiyat": 320.25,
     "bias": "BULLISH",
     "bolge": "PREMIUM",
-    "eq": 309.0,
+    "eq": 310.75,
     "aralik": [
-      286.0,
+      289.5,
       332.0
     ],
-    "zaman_utc": "2026-08-07 12:12 UTC",
-    "guncelleme": "2026-08-07 12:27:10 UTC"
+    "zaman_utc": "2026-08-07 13:33 UTC",
+    "guncelleme": "2026-08-07 13:48:57 UTC"
   },
   "BIMAS": {
     "veri_sorunu": false,
     "kaynak": "Yahoo BIMAS.IS",
     "vekil": false,
     "veri_yas_dk": 15,
-    "durum": "NOTR",
-    "skor": 32,
+    "durum": "SHORT_ONAY",
+    "skor": 72,
     "yon": "short",
     "fiyat": 387.0,
     "bias": "RANGE",
     "bolge": "PREMIUM",
-    "eq": 383.625,
+    "eq": 384.25,
     "aralik": [
       377.5,
-      389.75
+      391.0
     ],
-    "zaman_utc": "2026-08-07 12:12 UTC",
-    "guncelleme": "2026-08-07 12:27:10 UTC"
+    "zaman_utc": "2026-08-07 13:33 UTC",
+    "guncelleme": "2026-08-07 13:48:58 UTC"
   }
 }
