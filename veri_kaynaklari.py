@@ -101,6 +101,116 @@ for _kod in ("ASELS", "TUPRS", "BIMAS"):
     ]
 
 
+# ------------------------------------------------------------------ HTF
+#
+# Ust periyot (haftalik/gunluk/4H/1H). Yon, bolge ve plan buradan kurulur.
+#
+# NEDEN AYRI BIR YEDEK ZINCIRI: GitHub Actions kosucularindan
+# api.binance.com'a erisilemiyor (kayitlarda 10/10 kosuda BTC kaynagi
+# Coinbase'e dustu, yerelde her seferinde Binance secildi). 15dk verisi
+# icin zaten yedek vardi; ust periyot tek kaynaga bagli kalirsa BTC
+# bulutta tamamen korlesir.
+
+
+def _birlestir(barlar, kova_sn, kaydirma=0):
+    """Barlari TAKVIME hizali kovalara toplar (indeksle dilimlemez).
+
+    Sabit N'lik dilimleme, serinin nereden basladigina gore haftayi carsamba
+    gunune oturtabiliyor - haftalik pivotlar kayinca yon okumasi degisiyordu
+    (olculdu: turetilmis haftalikta BEARISH/uyumlu, natifte BEARISH/zayif).
+    Kova sinirini zaman damgasindan hesaplamak bu kaymayi kaldirir.
+
+    kaydirma: epoch persembeye denk gelir; haftalik kovayi pazartesi
+    00:00 UTC'ye oturtmak icin 4 gun kaydirilir.
+    """
+    kovalar = {}
+    for b in barlar:
+        k = (b["t"] + kaydirma) // kova_sn
+        g = kovalar.get(k)
+        if g is None:
+            kovalar[k] = {"t": b["t"], "o": b["o"], "h": b["h"], "l": b["l"],
+                          "c": b["c"], "v": b["v"]}
+        else:
+            g["h"] = max(g["h"], b["h"])
+            g["l"] = min(g["l"], b["l"])
+            g["c"] = b["c"]
+            g["v"] += b["v"]
+    return [kovalar[k] for k in sorted(kovalar)]
+
+
+def binance_htf(sembol="BTCUSDT"):
+    def k(aralik, limit):
+        raw = _http("https://api.binance.com/api/v3/klines"
+                    f"?symbol={sembol}&interval={aralik}&limit={limit}")
+        return [{"t": int(x[0]) // 1000, "o": float(x[1]), "h": float(x[2]),
+                 "l": float(x[3]), "c": float(x[4]), "v": float(x[5])}
+                for x in raw]
+    return {"1w": k("1w", 120), "1d": k("1d", 300),
+            "4h": k("4h", 300), "1h": k("1h", 400)}
+
+
+def kraken_htf(cift="XBTUSDT"):
+    """Kraken dort periyodu da NATIF verir - turetme yok, en iyi yedek."""
+    def k(dakika):
+        d = _http("https://api.kraken.com/0/public/OHLC"
+                  f"?pair={cift}&interval={dakika}")
+        if d.get("error"):
+            raise RuntimeError(str(d["error"]))
+        anahtar = [x for x in d["result"] if x != "last"][0]
+        return [{"t": int(x[0]), "o": float(x[1]), "h": float(x[2]),
+                 "l": float(x[3]), "c": float(x[4]), "v": float(x[6])}
+                for x in d["result"][anahtar]]
+    return {"1w": k(10080), "1d": k(1440), "4h": k(240), "1h": k(60)}
+
+
+def coinbase_htf(urun="BTC-USD"):
+    """Coinbase 4H ve 1W vermez; 1H'den 4H, 1G'den 1W turetilir."""
+    def k(gran):
+        raw = _http("https://api.exchange.coinbase.com/products/"
+                    f"{urun}/candles?granularity={gran}")
+        b = [{"t": int(x[0]), "o": float(x[3]), "h": float(x[2]),
+              "l": float(x[1]), "c": float(x[4]), "v": float(x[5])}
+             for x in raw]
+        return sorted(b, key=lambda z: z["t"])
+    saat, gun = k(3600), k(86400)
+    return {"1w": _birlestir(gun, 604800, kaydirma=345600), "1d": gun,
+            "4h": _birlestir(saat, 14400), "1h": saat}
+
+
+HTF_KAYNAKLAR = {
+    "BTCUSDT": [("Binance", binance_htf),
+                ("Kraken", kraken_htf),
+                ("Coinbase", coinbase_htf)],
+}
+
+# Yapi okunabilmesi icin gereken asgari bar sayisi. Bunun altinda kaynak
+# "cevap verdi" sayilmaz - yarim seriyle kurulan yon yanlis yondur.
+ASGARI_BAR = {"1w": 12, "1d": 60, "4h": 60, "1h": 60}
+
+
+def htf_cek(ad, log=None):
+    """Ust periyot serileri. Ilk YETERLI donen kaynak kullanilir.
+
+    Doner: (veri, etiket). Hicbiri yetmezse RuntimeError - cagiran taraf
+    bunu "bu enstrumanda korum" diye bildirir, sessizce atlamaz.
+    """
+    hatalar = []
+    for etiket, fn in HTF_KAYNAKLAR.get(ad, []):
+        try:
+            v = fn()
+            eksik = [p for p, n in ASGARI_BAR.items() if len(v.get(p, [])) < n]
+            if eksik:
+                hatalar.append(f"{etiket}=eksik({','.join(eksik)})")
+                continue
+            if log:
+                log(f"{ad}: HTF kaynak={etiket}")
+            return v, etiket
+        except Exception as ex:
+            hatalar.append(f"{etiket}=HATA({type(ex).__name__})")
+    raise RuntimeError(f"{ad}: ust periyot kaynagi yok -> "
+                       + ", ".join(hatalar or ["kayitli kaynak yok"]))
+
+
 def bar_cek(ad, azami_yas, log=None):
     """Sirali kaynaklari dener. Donen: (bars, etiket, vekil_mi, yas, denemeler)
 
