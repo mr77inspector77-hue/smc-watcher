@@ -1,0 +1,97 @@
+{
+  "BTCUSDT": {
+    "veri_sorunu": false,
+    "kaynak": "Binance",
+    "vekil": false,
+    "veri_yas_dk": 14,
+    "durum": "SHORT_HAZIRLIK",
+    "skor": 45,
+    "yon": "short",
+    "fiyat": 64867.36,
+    "bias": "BEARISH",
+    "bolge": "PREMIUM",
+    "eq": 64576.630000000005,
+    "aralik": [
+      64166.0,
+      64987.26
+    ],
+    "zaman_utc": "2026-08-07 10:15 UTC",
+    "guncelleme": "2026-08-07 10:28:37 UTC"
+  },
+  "NQ1!": {
+    "veri_sorunu": false,
+    "kaynak": "Yahoo NQ=F",
+    "vekil": false,
+    "veri_yas_dk": 10,
+    "durum": "SHORT_HAZIRLIK",
+    "skor": 62,
+    "yon": "short",
+    "fiyat": 29602.25,
+    "bias": "RANGE",
+    "bolge": "PREMIUM",
+    "eq": 29463.75,
+    "aralik": [
+      29241.25,
+      29686.25
+    ],
+    "zaman_utc": "2026-08-07 10:18 UTC",
+    "guncelleme": "2026-08-07 10:28:42 UTC"
+  },
+  "ASELS": {
+    "veri_sorunu": false,
+    "kaynak": "Yahoo ASELS.IS",
+    "vekil": false,
+    "veri_yas_dk": 15,
+    "durum": "NOTR",
+    "skor": 40,
+    "yon": "short",
+    "fiyat": 357.0,
+    "bias": "BULLISH",
+    "bolge": "PREMIUM",
+    "eq": 355.0,
+    "aralik": [
+      341.5,
+      368.5
+    ],
+    "zaman_utc": "2026-08-07 10:13 UTC",
+    "guncelleme": "2026-08-07 10:28:48 UTC"
+  },
+  "TUPRS": {
+    "veri_sorunu": false,
+    "kaynak": "Yahoo TUPRS.IS",
+    "vekil": false,
+    "veri_yas_dk": 15,
+    "durum": "LONG_HAZIRLIK",
+    "skor": 45,
+    "yon": "long",
+    "fiyat": 323.25,
+    "bias": "BULLISH",
+    "bolge": "PREMIUM",
+    "eq": 307.5,
+    "aralik": [
+      283.0,
+      332.0
+    ],
+    "zaman_utc": "2026-08-07 10:13 UTC",
+    "guncelleme": "2026-08-07 10:28:51 UTC"
+  },
+  "BIMAS": {
+    "veri_sorunu": false,
+    "kaynak": "Yahoo BIMAS.IS",
+    "vekil": false,
+    "veri_yas_dk": 15,
+    "durum": "NOTR",
+    "skor": 32,
+    "yon": "long",
+    "fiyat": 386.0,
+    "bias": "RANGE",
+    "bolge": "PREMIUM",
+    "eq": 383.625,
+    "aralik": [
+      377.5,
+      389.75
+    ],
+    "zaman_utc": "2026-08-07 10:13 UTC",
+    "guncelleme": "2026-08-07 10:28:55 UTC"
+  }
+}

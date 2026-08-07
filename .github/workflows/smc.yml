@@ -1,0 +1,48 @@
+name: SMC Watcher
+
+on:
+  schedule:
+    # 15 dakikada bir. GitHub yogunlukta geciktirebilir.
+    - cron: "*/15 * * * *"
+  workflow_dispatch:        # elle calistirma butonu
+
+permissions:
+  contents: write           # durum dosyasini geri commit'lemek icin
+
+concurrency:
+  group: smc-watcher        # ust uste calismasin
+  cancel-in-progress: false
+
+jobs:
+  kontrol:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      TZ: Europe/Istanbul   # BIST seans kontrolu yerel saate bakiyor
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Saat kontrolu
+        run: date
+
+      - name: SMC kontrolu
+        run: python smc_watch.py
+
+      - name: Durumu kaydet
+        run: |
+          git config user.name  "smc-watcher"
+          git config user.email "actions@github.com"
+          git add smc_state_auto.json || true
+          if git diff --staged --quiet; then
+            echo "degisiklik yok"
+          else
+            git commit -m "durum guncellendi [skip ci]"
+            git push
+          fi

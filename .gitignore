@@ -1,0 +1,11 @@
+# TOKEN ASLA GITHUB'A GITMESIN - GitHub Secrets kullaniliyor
+telegram_config.json
+
+# loglar (GitHub Actions sekmesinde zaten var)
+smc_watch.log
+cron.log
+
+# yerel test dosyalari
+test_*.py
+__pycache__/
+*.pyc
