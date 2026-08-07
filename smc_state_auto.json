@@ -3,12 +3,12 @@
     "veri_sorunu": false,
     "kaynak": "Coinbase",
     "vekil": false,
-    "veri_yas_dk": 17,
+    "veri_yas_dk": 14,
     "durum": "NOTR",
-    "skor": 32,
-    "yon": "short",
-    "fiyat": 64962.89,
-    "bias": "RANGE",
+    "skor": 25,
+    "yon": "long",
+    "fiyat": 64904.08,
+    "bias": "BULLISH",
     "bolge": "PREMIUM",
     "eq": 64724.16,
     "aralik": [
@@ -16,14 +16,14 @@
       65348.97
     ],
     "kapi": "IZLE",
-    "pencere": null,
+    "pencere": "OGLE",
     "gunluk_bias": "BEARISH",
     "haftalik_bias": "BEARISH",
     "po3": "MANIPULASYON",
     "smt": null,
     "veto": false,
-    "zaman_utc": "2026-08-07 15:30 UTC",
-    "guncelleme": "2026-08-07 15:47:09 UTC"
+    "zaman_utc": "2026-08-07 16:30 UTC",
+    "guncelleme": "2026-08-07 16:43:54 UTC"
   },
   "NQ1!": {
     "veri_sorunu": false,
@@ -31,10 +31,10 @@
     "vekil": false,
     "veri_yas_dk": 10,
     "durum": "NOTR",
-    "skor": 37,
-    "yon": "long",
-    "fiyat": 29824.25,
-    "bias": "RANGE",
+    "skor": 30,
+    "yon": "short",
+    "fiyat": 29711.0,
+    "bias": "BULLISH",
     "bolge": "PREMIUM",
     "eq": 29658.125,
     "aralik": [
@@ -42,14 +42,14 @@
       29867.75
     ],
     "kapi": "IZLE",
-    "pencere": null,
+    "pencere": "OGLE",
     "gunluk_bias": "RANGE",
     "haftalik_bias": "BULLISH",
     "po3": "MANIPULASYON",
     "smt": null,
     "veto": false,
-    "zaman_utc": "2026-08-07 15:37 UTC",
-    "guncelleme": "2026-08-07 15:47:10 UTC"
+    "zaman_utc": "2026-08-07 16:33 UTC",
+    "guncelleme": "2026-08-07 16:43:54 UTC"
   },
   "ASELS": {
     "veri_sorunu": false,
