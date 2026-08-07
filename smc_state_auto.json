@@ -1,41 +1,47 @@
 {
   "BTCUSDT": {
     "veri_sorunu": false,
+    "htf_sorunu": false,
     "kaynak": "Coinbase",
     "vekil": false,
-    "veri_yas_dk": 9,
+    "veri_yas_dk": 12,
     "durum": "NOTR",
-    "skor": 32,
+    "skor": 31,
     "yon": "short",
-    "fiyat": 64953.67,
-    "bias": "RANGE",
+    "fiyat": 64917.0,
+    "bias": "BEARISH",
+    "kurulum": "BOLGE YOK (yeterli genislikte)",
+    "plan": null,
     "bolge": "PREMIUM",
-    "eq": 64724.16,
+    "eq": 62389.7,
     "aralik": [
-      64099.35,
-      65348.97
+      57829.4,
+      66950.0
     ],
-    "zaman_utc": "2026-08-07 21:45 UTC",
-    "guncelleme": "2026-08-07 21:53:33 UTC"
+    "zaman_utc": "2026-08-07 22:15 UTC",
+    "guncelleme": "2026-08-07 22:26:37 UTC"
   },
   "NQ1!": {
     "veri_sorunu": false,
-    "kaynak": "Yahoo NQ=F",
-    "vekil": false,
-    "veri_yas_dk": 54,
+    "htf_sorunu": false,
+    "kaynak": "QQQ (vekil)",
+    "vekil": true,
+    "veri_yas_dk": 0,
     "durum": "NOTR",
-    "skor": 32,
-    "yon": "long",
+    "skor": 28,
+    "yon": "short",
     "fiyat": 29839.5,
-    "bias": "RANGE",
+    "bias": "BEARISH",
+    "kurulum": "BOLGE YOK (yeterli genislikte)",
+    "plan": null,
     "bolge": "PREMIUM",
-    "eq": 29660.625,
+    "eq": 29084.75,
     "aralik": [
-      29453.5,
-      29867.75
+      27201.5,
+      30968.0
     ],
-    "zaman_utc": "2026-08-07 20:59 UTC",
-    "guncelleme": "2026-08-07 21:53:33 UTC"
+    "zaman_utc": "2026-08-07 22:26 UTC",
+    "guncelleme": "2026-08-07 22:26:39 UTC"
   },
   "ASELS": {
     "veri_sorunu": false,
