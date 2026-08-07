@@ -101,6 +101,65 @@ for _kod in ("ASELS", "TUPRS", "BIMAS"):
     ]
 
 
+# ------------------------------------------------------------------ tarihsel
+
+# Geri test icin UZUN 15dk gecmisi. Canli akista kullanilmaz.
+
+
+def binance_tarihsel(sembol="BTCUSDT", gun=60):
+    """Binance 1000 barlik sayfalar halinde geriye dogru yurur."""
+    import time
+    bitis = int(time.time() * 1000)
+    gerek = gun * 96
+    toplam = {}
+    while len(toplam) < gerek:
+        raw = _http("https://api.binance.com/api/v3/klines"
+                    f"?symbol={sembol}&interval=15m&limit=1000&endTime={bitis}")
+        if not raw:
+            break
+        for k in raw:
+            toplam[int(k[0]) // 1000] = {
+                "t": int(k[0]) // 1000, "o": float(k[1]), "h": float(k[2]),
+                "l": float(k[3]), "c": float(k[4]), "v": float(k[5])}
+        bitis = int(raw[0][0]) - 1
+        if len(raw) < 1000:
+            break
+    return [toplam[t] for t in sorted(toplam)]
+
+
+def tarihsel_15m(ad, gun=60):
+    """Enstruman icin elde edilebilen en uzun 15dk gecmisi.
+
+    Yahoo 15dk barlarda 60 gunle sinirlidir; Binance sayfalanabildigi icin
+    BTC'de cok daha uzun gecmis alinabilir.
+    """
+    if ad == "BTCUSDT":
+        try:
+            return binance_tarihsel("BTCUSDT", gun)
+        except Exception:
+            pass
+    sembol = {"NQ1!": "NQ%3DF"}.get(ad, f"{ad}.IS")
+    return yahoo_15m(sembol, rng=f"{min(gun, 60)}d")
+
+
+def korele_tarihsel(ad, gun=60):
+    """SMT icin korele enstrumanin ayni uzunluktaki gecmisi."""
+    if ad == "BTCUSDT":
+        try:
+            return binance_tarihsel("ETHUSDT", gun), "ETH"
+        except Exception:
+            return None, None
+    if ad == "NQ1!":
+        try:
+            return yahoo_15m("ES%3DF", rng=f"{min(gun, 60)}d"), "ES (S&P vadeli)"
+        except Exception:
+            return None, None
+    try:
+        return yahoo_15m("XU100.IS", rng=f"{min(gun, 60)}d"), "XU100"
+    except Exception:
+        return None, None
+
+
 # ------------------------------------------------------------------ gunluk
 
 # Daily/Weekly bias icin gunluk bar. Tazelik kritik degil - bias gun icinde
