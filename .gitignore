@@ -12,3 +12,4 @@ __pycache__/
 
 # footprint ham/onbellek verisi (yeniden uretilebilir, repoda durmasin)
 footprint_onbellek/
+footprint_ham/

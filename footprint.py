@@ -19,6 +19,7 @@ NOT: Bu modul CANLI SINYAL URETMEZ. Once olculur, sonra karar verilir.
 import csv
 import io
 import json
+import os
 import time
 import urllib.request
 import zipfile
@@ -93,12 +94,21 @@ def arsiv_gun(sembol, tarih, log=None):
     tarih: "YYYY-MM-DD"
     """
     url = f"{ARSIV}/{sembol}/{sembol}-aggTrades-{tarih}.zip"
-    try:
-        ham = _http(url, timeout=180).read()
-    except Exception as ex:
-        if log:
-            log(f"footprint arsiv yok: {tarih} ({type(ex).__name__})")
-        return []
+    # ZIP'i yerelde tut: ayni gunu farkli periyotlarda (5dk/15dk) islerken
+    # yuzlerce MB'i tekrar indirmek anlamsiz.
+    kls = os.path.join(os.path.dirname(os.path.abspath(__file__)), "footprint_ham")
+    os.makedirs(kls, exist_ok=True)
+    yerel = os.path.join(kls, f"{sembol}-{tarih}.zip")
+    if os.path.exists(yerel):
+        ham = open(yerel, "rb").read()
+    else:
+        try:
+            ham = _http(url, timeout=180).read()
+            open(yerel, "wb").write(ham)
+        except Exception as ex:
+            if log:
+                log(f"footprint arsiv yok: {tarih} ({type(ex).__name__})")
+            return []
     cikti = []
     with zipfile.ZipFile(io.BytesIO(ham)) as z:
         with z.open(z.namelist()[0]) as f:
