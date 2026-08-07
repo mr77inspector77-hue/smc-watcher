@@ -1,22 +1,22 @@
 {
   "BTCUSDT": {
     "veri_sorunu": false,
-    "kaynak": "Binance",
+    "kaynak": "Coinbase",
     "vekil": false,
-    "veri_yas_dk": 14,
+    "veri_yas_dk": 16,
     "durum": "SHORT_HAZIRLIK",
     "skor": 45,
     "yon": "short",
-    "fiyat": 64867.36,
+    "fiyat": 64835.79,
     "bias": "BEARISH",
     "bolge": "PREMIUM",
-    "eq": 64576.630000000005,
+    "eq": 64509.76,
     "aralik": [
-      64166.0,
-      64987.26
+      64087.41,
+      64932.11
     ],
-    "zaman_utc": "2026-08-07 10:15 UTC",
-    "guncelleme": "2026-08-07 10:28:37 UTC"
+    "zaman_utc": "2026-08-07 10:30 UTC",
+    "guncelleme": "2026-08-07 10:46:07 UTC"
   },
   "NQ1!": {
     "veri_sorunu": false,
@@ -24,9 +24,9 @@
     "vekil": false,
     "veri_yas_dk": 10,
     "durum": "SHORT_HAZIRLIK",
-    "skor": 62,
+    "skor": 52,
     "yon": "short",
-    "fiyat": 29602.25,
+    "fiyat": 29618.25,
     "bias": "RANGE",
     "bolge": "PREMIUM",
     "eq": 29463.75,
@@ -34,8 +34,8 @@
       29241.25,
       29686.25
     ],
-    "zaman_utc": "2026-08-07 10:18 UTC",
-    "guncelleme": "2026-08-07 10:28:42 UTC"
+    "zaman_utc": "2026-08-07 10:36 UTC",
+    "guncelleme": "2026-08-07 10:46:07 UTC"
   },
   "ASELS": {
     "veri_sorunu": false,
@@ -43,8 +43,8 @@
     "vekil": false,
     "veri_yas_dk": 15,
     "durum": "NOTR",
-    "skor": 40,
-    "yon": "short",
+    "skor": 25,
+    "yon": "long",
     "fiyat": 357.0,
     "bias": "BULLISH",
     "bolge": "PREMIUM",
@@ -53,8 +53,8 @@
       341.5,
       368.5
     ],
-    "zaman_utc": "2026-08-07 10:13 UTC",
-    "guncelleme": "2026-08-07 10:28:48 UTC"
+    "zaman_utc": "2026-08-07 10:31 UTC",
+    "guncelleme": "2026-08-07 10:46:07 UTC"
   },
   "TUPRS": {
     "veri_sorunu": false,
@@ -64,7 +64,7 @@
     "durum": "LONG_HAZIRLIK",
     "skor": 45,
     "yon": "long",
-    "fiyat": 323.25,
+    "fiyat": 324.25,
     "bias": "BULLISH",
     "bolge": "PREMIUM",
     "eq": 307.5,
@@ -72,8 +72,8 @@
       283.0,
       332.0
     ],
-    "zaman_utc": "2026-08-07 10:13 UTC",
-    "guncelleme": "2026-08-07 10:28:51 UTC"
+    "zaman_utc": "2026-08-07 10:31 UTC",
+    "guncelleme": "2026-08-07 10:46:08 UTC"
   },
   "BIMAS": {
     "veri_sorunu": false,
@@ -83,7 +83,7 @@
     "durum": "NOTR",
     "skor": 32,
     "yon": "long",
-    "fiyat": 386.0,
+    "fiyat": 387.5,
     "bias": "RANGE",
     "bolge": "PREMIUM",
     "eq": 383.625,
@@ -91,7 +91,7 @@
       377.5,
       389.75
     ],
-    "zaman_utc": "2026-08-07 10:13 UTC",
-    "guncelleme": "2026-08-07 10:28:55 UTC"
+    "zaman_utc": "2026-08-07 10:31 UTC",
+    "guncelleme": "2026-08-07 10:46:08 UTC"
   }
 }
