@@ -3,11 +3,11 @@
     "veri_sorunu": false,
     "kaynak": "Coinbase",
     "vekil": false,
-    "veri_yas_dk": 6,
+    "veri_yas_dk": 7,
     "durum": "NOTR",
-    "skor": 37,
-    "yon": "long",
-    "fiyat": 64936.01,
+    "skor": 32,
+    "yon": "short",
+    "fiyat": 64935.92,
     "bias": "RANGE",
     "bolge": "PREMIUM",
     "eq": 64724.16,
@@ -15,8 +15,8 @@
       64099.35,
       65348.97
     ],
-    "zaman_utc": "2026-08-07 20:15 UTC",
-    "guncelleme": "2026-08-07 20:20:33 UTC"
+    "zaman_utc": "2026-08-07 21:00 UTC",
+    "guncelleme": "2026-08-07 21:07:22 UTC"
   },
   "NQ1!": {
     "veri_sorunu": false,
@@ -26,7 +26,7 @@
     "durum": "NOTR",
     "skor": 32,
     "yon": "short",
-    "fiyat": 29807.25,
+    "fiyat": 29828.0,
     "bias": "RANGE",
     "bolge": "PREMIUM",
     "eq": 29660.625,
@@ -34,8 +34,8 @@
       29453.5,
       29867.75
     ],
-    "zaman_utc": "2026-08-07 20:10 UTC",
-    "guncelleme": "2026-08-07 20:20:33 UTC"
+    "zaman_utc": "2026-08-07 20:57 UTC",
+    "guncelleme": "2026-08-07 21:07:22 UTC"
   },
   "ASELS": {
     "veri_sorunu": false,
