@@ -20,17 +20,12 @@ import urllib.parse
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from veri_kaynaklari import (bar_cek, gunluk_cek, korele_cek,  # noqa: E402
-                             yahoo_15m, yas_dk)
-import ict                                              # noqa: E402
-import seanslar                                         # noqa: E402
-from seanslar import bist_acik_mi, nq_acik_mi           # noqa: E402
+from veri_kaynaklari import bar_cek, yahoo_15m, yas_dk  # noqa: E402
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 CONFIG_PATH = os.path.join(BASE, "telegram_config.json")
 STATE_PATH = os.path.join(BASE, "smc_state_auto.json")
 LOG_PATH = os.path.join(BASE, "smc_watch.log")
-GRAFIK_KLASOR = os.path.join(BASE, "grafik")
 
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
@@ -256,17 +251,7 @@ def skorla(yon, bias, fiyat, eq, fvgler, sweeps, kirilim):
     return sum(d.values()), d, gap
 
 
-def degerlendir(ad, bars15, bars1h, gunluk=None, korele=None, korele_ad=None):
-    """5 faktorlu skor + ICT baglam katmani.
-
-    ONEMLI: ICT maddeleri SKORA PUAN EKLEMEZ. 17 kosullu bir skor asiri
-    uyumlanir ve her sinyal "teyitli" gorunur. ICT katmani iki sekilde
-    calisir:
-      - zaman  -> KAPI  (tetik penceresi mi, sadece izleme mi)
-      - SMT    -> VETO  (korele enstruman teyit etmiyorsa ONAY'a izin yok)
-      - digeri -> BAGLAM (mesaja yazilir, karari degistirmez)
-    """
-    bist = ad in BIST_HISSELERI
+def degerlendir(ad, bars15, bars1h):
     fiyat = bars15[-1]["c"]
     bias = htf_bias(bars1h)
     hi, lo, eq = dealing_range(bars15)
@@ -289,28 +274,6 @@ def degerlendir(ad, bars15, bars1h, gunluk=None, korele=None, korele_ad=None):
     else:
         durum = "NOTR"
 
-    # ---- ICT baglam katmani
-    son_ts = bars15[-1]["t"]
-    zaman = seanslar.zaman_bilgisi(son_ts, bist=bist)
-    asya = None if bist else seanslar.asya_araligi(bars15)
-    p3 = ict.po3(bars15, birikim_dk=60 if bist else 120, bist=bist)
-    # Bugunun tepe/dibi: PDH/PDL likiditesi alindi mi sorusu icin
-    bugun = [b for b in bars15
-             if seanslar.ts_to_et(b["t"]).date() == seanslar.ts_to_et(son_ts).date()]
-    b_tepe = max((b["h"] for b in bugun), default=None)
-    b_dip = min((b["l"] for b in bugun), default=None)
-    gb = ict.gunluk_bias(gunluk or [], fiyat, b_tepe, b_dip)
-    hb = ict.haftalik_bias(gunluk or [])
-    smt = ict.smt(bars15, korele, korele_ad or "korele")
-
-    # ---- SMT vetosu: teyitsiz yonde ONAY verilmez
-    veto = None
-    if smt["var"] and durum.endswith("_ONAY"):
-        if (yon == "long" and smt["tip"] == "bear") or \
-           (yon == "short" and smt["tip"] == "bull"):
-            durum = durum.replace("_ONAY", "_HAZIRLIK")
-            veto = smt["aciklama"]
-
     return {
         "ad": ad,
         "durum": durum,
@@ -324,20 +287,10 @@ def degerlendir(ad, bars15, bars1h, gunluk=None, korele=None, korele_ad=None):
         "bolge": "PREMIUM" if fiyat > eq else "DISCOUNT",
         "detay": detay,
         "gap": gap,
-        "fvgler": fvgler,
         "sweeps": sweeps,
         "kirilim": kirilim,
         "son_tepe": son_tepe,
         "son_dip": son_dip,
-        "bist": bist,
-        "zaman": zaman,
-        "kapi": zaman["kapi"],
-        "asya": asya,
-        "po3": p3,
-        "gunluk_bias": gb,
-        "haftalik_bias": hb,
-        "smt": smt,
-        "veto": veto,
         "zaman_utc": datetime.fromtimestamp(bars15[-1]["t"], timezone.utc).strftime(
             "%Y-%m-%d %H:%M UTC"
         ),
@@ -367,54 +320,6 @@ def fmt(x, ondalik=2):
     if x is None:
         return "-"
     return f"{x:,.{ondalik}f}".replace(",", "X").replace(".", ",").replace("X", ".")
-
-
-KAPI_ROZET = {
-    "TETIK": "🎯 <b>TETİK PENCERESİ</b>",
-    "IZLE": "👁️ <b>İZLEME</b> — tetik penceresi dışı",
-}
-
-
-def ict_blok(r):
-    """ICT baglam katmani. Karari degistirmez (SMT vetosu haric), anlatir."""
-    z = r.get("zaman") or {}
-    kz = z.get("kz")
-    sat = ["", "───────────────", "<b>ICT bağlamı</b>",
-           f"{KAPI_ROZET.get(r.get('kapi'), '')}",
-           f"Pencere: <b>{kz['etiket'] if kz else 'pencere dışı'}</b>"
-           f"  ({z.get('et', '-')} / {z.get('tsi', '-')})"]
-
-    gb, hb = r.get("gunluk_bias") or {}, r.get("haftalik_bias") or {}
-    sat.append(f"Günlük bias: <b>{gb.get('bias', '-')}</b>"
-               f"  ·  Haftalık: <b>{hb.get('bias', '-')}</b>")
-    if gb.get("pdh") is not None:
-        sat.append(f"PDH {fmt(gb['pdh'])} / PDL {fmt(gb['pdl'])}")
-
-    a = r.get("asya")
-    if a:
-        sat.append(f"Asya aralığı: {fmt(a['dip'])} — {fmt(a['tepe'])}"
-                   f"  ({a['tarih']})")
-
-    p = r.get("po3") or {}
-    if p.get("faz"):
-        sat.append(f"PO3: <b>{ict.FAZ_ETIKET.get(p['faz'], p['faz'])}</b>")
-        if p.get("aciklama"):
-            sat.append(f"  ↳ {p['aciklama']}")
-
-    smt = r.get("smt") or {}
-    if smt.get("var"):
-        sat.append(f"⚡ <b>SMT uyuşmazlığı ({smt['tip']})</b>: {smt['aciklama']}")
-    elif smt.get("aciklama"):
-        sat.append(f"SMT: {smt['aciklama']}")
-
-    if r.get("veto"):
-        sat += ["", "🛑 <b>SMT VETOSU</b> — onay bir kademe düşürüldü.",
-                f"{r['veto']}"]
-
-    if r.get("bist"):
-        sat.append("<i>BIST pencereleri ICT kill zone'ları değildir; "
-                   "BIST'in kendi hacim yapısından çıkarılmıştır.</i>")
-    return sat
 
 
 def mesaj_olustur(r, eski_durum, eski_skor):
@@ -464,7 +369,6 @@ def mesaj_olustur(r, eski_durum, eski_skor):
         "",
         f"Yakın yapı: dip {fmt(r['son_dip'])} / tepe {fmt(r['son_tepe'])}",
     ]
-    satirlar += ict_blok(r)
     if uyari:
         satirlar += ["", f"⚠️ {uyari}"]
 
@@ -495,38 +399,6 @@ def telegram_ayar():
         return {"bot_token": tok, "chat_id": cid}
     with open(CONFIG_PATH, "r", encoding="utf-8") as f:
         return json.load(f)
-
-
-def gorsel_ciz(r, bars):
-    """Grafik uretir. matplotlib yoksa sessizce None doner - metin akisi
-    hicbir kosulda grafige bagimli olmamali."""
-    try:
-        import gorsel
-    except Exception as ex:
-        log(f"gorsel modulu yuklenemedi ({type(ex).__name__}) - metin devam ediyor")
-        return None
-    return gorsel.grafik_ciz(r, bars, GRAFIK_KLASOR, bist=r.get("bist", False))
-
-
-def telegram_foto_gonder(yol, aciklama):
-    import gorsel
-    return gorsel.telegram_foto(telegram_ayar(), yol, aciklama)
-
-
-def ozet_metin(r):
-    """Grafik altina gidecek kisa aciklama (Telegram siniri 1024 karakter)."""
-    e = EMOJI.get(r["durum"], "•")
-    kz = (r.get("zaman") or {}).get("kz")
-    sat = [f"<b>{e} {r['ad']} — {BASLIK.get(r['durum'], r['durum'])}</b>",
-           f"Skor {r['skor']}/100 · {r['bolge']} · HTF {r['bias']}",
-           f"{KAPI_ROZET.get(r.get('kapi'), '')}"
-           f" · {kz['etiket'] if kz else 'pencere dışı'}",
-           f"Günlük {r['gunluk_bias']['bias']} · Haftalık "
-           f"{r['haftalik_bias']['bias']} · PO3 {r['po3']['faz']}"]
-    if r.get("veto"):
-        sat.append("🛑 SMT vetosu uygulandı")
-    sat.append("<i>Detay aşağıdaki mesajda.</i>")
-    return "\n".join(sat)
 
 
 def telegram_gonder(metin):
@@ -566,10 +438,34 @@ def state_kaydet(s):
 BIST_HISSELERI = ["ASELS", "TUPRS", "BIMAS"]
 
 
+def bist_acik_mi():
+    """BIST seans kontrolu: hafta ici 10:00 - 18:30 (yerel saat = TSI)."""
+    simdi = datetime.now()
+    if simdi.weekday() > 4:
+        return False
+    dk = simdi.hour * 60 + simdi.minute
+    return 10 * 60 <= dk <= 18 * 60 + 30
+
+
 def bar_yasi_dk(bars):
     """Son barin kac dakika onceye ait oldugu. Bayat veri korumasi."""
     son = bars[-1]["t"]
     return (datetime.now(timezone.utc).timestamp() - son) / 60.0
+
+
+def nq_acik_mi():
+    """CME e-mini: Pazar 18:00 ET - Cuma 17:00 ET, gunluk 17:00-18:00 ET bakim.
+    ET = UTC-4 (yaz saati)."""
+    u = datetime.now(timezone.utc)
+    et_saat = (u.hour - 4) % 24
+    et_gun = u.weekday() if u.hour >= 4 else (u.weekday() - 1) % 7
+    if et_gun == 5:                      # Cumartesi
+        return False
+    if et_gun == 6 and et_saat < 18:     # Pazar 18:00 oncesi
+        return False
+    if et_gun == 4 and et_saat >= 17:    # Cuma 17:00 sonrasi
+        return False
+    return et_saat != 17                 # gunluk bakim saati
 
 
 def piyasa_acik_mi(ad):
@@ -683,51 +579,21 @@ def main():
             except Exception as ex:
                 log(f"{ad}: duzelme bildirimi gonderilemedi: {ex}")
 
-        # --- ICT baglam verisi. Yoklugu takibi DURDURMAZ; eksikse o satir
-        #     mesajda "veri yok" der, sistem calismaya devam eder.
-        gunluk = gunluk_cek(ad, log)
-        kor_bars, kor_ad = korele_cek(ad, log=log)
-
-        r = degerlendir(ad, b15, resample_to_1h(b15), gunluk, kor_bars, kor_ad)
+        r = degerlendir(ad, b15, resample_to_1h(b15))
         r["kaynak"] = kaynak
         r["vekil"] = vekil
         r["oran"] = oran
         eski_durum = onceki_kayit.get("durum", "BASLANGIC")
         eski_skor = onceki_kayit.get("skor", 0)
-        eski_kapi = onceki_kayit.get("kapi")
 
-        # Bildirim anahtari durum + kapi. Boylece "ONAY zaten vardi ama simdi
-        # kill zone'a girdik" da haber olur - zaman katmaninin butun amaci bu.
-        # NOTR enstrumanda kapi degisimi haber degildir, gurultu olur.
-        durum_degisti = r["durum"] != eski_durum
-        # eski_kapi None ise bu, bu surumun ILK calismasidir; kapi "degisti"
-        # sayilmaz - aksi halde gecise bir kerelik mesaj yagmuru olur.
-        kapi_degisti = (eski_kapi is not None and r["kapi"] != eski_kapi
-                        and r["durum"] != "NOTR")
-
-        if durum_degisti or kapi_degisti:
-            sebep = "durum" if durum_degisti else "kapi"
+        if r["durum"] != eski_durum:
             try:
-                metin = mesaj_olustur(r, eski_durum, eski_skor)
-                gonderildi = False
-                # Anlamli durumlarda once grafik dene, metni aciklama yap.
-                if r["durum"] != "NOTR":
-                    try:
-                        yol = gorsel_ciz(r, b15)
-                        if yol:
-                            gonderildi = telegram_foto_gonder(yol, ozet_metin(r))
-                    except Exception as ex:
-                        log(f"{ad}: grafik uretilemedi ({type(ex).__name__}: {ex})")
-                ok = telegram_gonder(metin)
-                log(f"{ad}: {eski_durum}/{eski_kapi} -> {r['durum']}/{r['kapi']} "
-                    f"(skor {r['skor']}, sebep={sebep}) "
-                    f"TELEGRAM={'OK' if ok else 'HATA'} "
-                    f"GRAFIK={'OK' if gonderildi else '-'}")
+                ok = telegram_gonder(mesaj_olustur(r, eski_durum, eski_skor))
+                log(f"{ad}: {eski_durum} -> {r['durum']} (skor {r['skor']}) TELEGRAM={'OK' if ok else 'HATA'}")
             except Exception as ex:
                 log(f"{ad}: Telegram gonderim hatasi: {ex}")
         else:
-            log(f"{ad}: {r['durum']}/{r['kapi']} degismedi "
-                f"(skor {eski_skor}->{r['skor']}, fiyat {r['fiyat']:.2f}) - sessiz")
+            log(f"{ad}: {r['durum']} degismedi (skor {eski_skor}->{r['skor']}, fiyat {r['fiyat']:.2f}) - sessiz")
 
         state[ad] = {
             "veri_sorunu": False,
@@ -742,13 +608,6 @@ def main():
             "bolge": r["bolge"],
             "eq": r["eq"],
             "aralik": [r["aralik_dip"], r["aralik_tepe"]],
-            "kapi": r["kapi"],
-            "pencere": (r["zaman"]["kz"] or {}).get("kod"),
-            "gunluk_bias": r["gunluk_bias"]["bias"],
-            "haftalik_bias": r["haftalik_bias"]["bias"],
-            "po3": r["po3"]["faz"],
-            "smt": r["smt"]["tip"] if r["smt"]["var"] else None,
-            "veto": bool(r["veto"]),
             "zaman_utc": r["zaman_utc"],
             "guncelleme": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"),
         }

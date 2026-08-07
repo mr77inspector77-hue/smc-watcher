@@ -5,10 +5,6 @@ telegram_config.json
 smc_watch.log
 cron.log
 
-# uretilen grafikler (Telegram'a gidiyor, repoda durmasina gerek yok)
-grafik/
-*.png
-
 # yerel test dosyalari
 test_*.py
 __pycache__/
