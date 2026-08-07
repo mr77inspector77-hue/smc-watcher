@@ -17,7 +17,7 @@ import os
 import sys
 import urllib.request
 import urllib.parse
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from veri_kaynaklari import bar_cek, yahoo_15m, yas_dk  # noqa: E402
@@ -453,19 +453,37 @@ def bar_yasi_dk(bars):
     return (datetime.now(timezone.utc).timestamp() - son) / 60.0
 
 
+def _ayin_n_inci_pazari(yil, ay, n):
+    ilk = 1 + (6 - datetime(yil, ay, 1).weekday()) % 7
+    return ilk + (n - 1) * 7
+
+
+def et_saati(u):
+    """UTC -> New York saati. Yaz saatini EL ILE hesaplar; zoneinfo/tzdata
+    kurulu olmayan makinelerde de calissin diye.
+
+    ABD kurali (2007 sonrasi): Mart'in 2. Pazari 02:00 yerelden Kasim'in
+    1. Pazari 02:00 yerele kadar EDT (UTC-4), disinda EST (UTC-5).
+    Ofseti UTC-4'e sabitlemek kasim-mart arasi seansi bir saat kaydirir.
+    """
+    y = u.year
+    basla = datetime(y, 3, _ayin_n_inci_pazari(y, 3, 2), 7, tzinfo=timezone.utc)
+    bitir = datetime(y, 11, _ayin_n_inci_pazari(y, 11, 1), 6, tzinfo=timezone.utc)
+    ofs = -4 if basla <= u < bitir else -5
+    return u.astimezone(timezone(timedelta(hours=ofs)))
+
+
 def nq_acik_mi():
-    """CME e-mini: Pazar 18:00 ET - Cuma 17:00 ET, gunluk 17:00-18:00 ET bakim.
-    ET = UTC-4 (yaz saati)."""
-    u = datetime.now(timezone.utc)
-    et_saat = (u.hour - 4) % 24
-    et_gun = u.weekday() if u.hour >= 4 else (u.weekday() - 1) % 7
-    if et_gun == 5:                      # Cumartesi
+    """CME e-mini: Pazar 18:00 ET - Cuma 17:00 ET, gunluk 17:00-18:00 ET bakim."""
+    et = et_saati(datetime.now(timezone.utc))
+    gun, saat = et.weekday(), et.hour     # Pazartesi=0 ... Pazar=6
+    if gun == 5:                          # Cumartesi
         return False
-    if et_gun == 6 and et_saat < 18:     # Pazar 18:00 oncesi
+    if gun == 6 and saat < 18:            # Pazar 18:00 oncesi
         return False
-    if et_gun == 4 and et_saat >= 17:    # Cuma 17:00 sonrasi
+    if gun == 4 and saat >= 17:           # Cuma 17:00 sonrasi
         return False
-    return et_saat != 17                 # gunluk bakim saati
+    return saat != 17                     # gunluk bakim saati
 
 
 def piyasa_acik_mi(ad):
