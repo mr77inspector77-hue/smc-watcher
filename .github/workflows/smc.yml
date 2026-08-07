@@ -21,7 +21,7 @@ concurrency:
 jobs:
   kontrol:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10     # gunluk + korele veri cekimi ve grafik uretimi eklendi
     env:
       TZ: Europe/Istanbul   # BIST seans kontrolu yerel saate bakiyor
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -34,6 +34,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
+      - name: Bagimliliklar
+        run: pip install --quiet matplotlib
 
       - name: Saat kontrolu
         run: date
