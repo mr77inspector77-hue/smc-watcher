@@ -499,7 +499,35 @@ def oran_guncelle(state):
     return kayit.get("NQ_QQQ")
 
 
+def baglanti_testi():
+    """Telegram ayarlarini dogrular ve test mesaji atar. Sorun varsa net soyler."""
+    tok = os.environ.get("TELEGRAM_BOT_TOKEN")
+    cid = os.environ.get("TELEGRAM_CHAT_ID")
+    log(f"TEST: TELEGRAM_BOT_TOKEN {'VAR' if tok else 'YOK'} "
+        f"(uzunluk {len(tok) if tok else 0})")
+    log(f"TEST: TELEGRAM_CHAT_ID   {'VAR' if cid else 'YOK'} "
+        f"(deger {cid if cid else '-'})")
+    if not tok or not cid:
+        log("TEST BASARISIZ: GitHub Secrets eksik. "
+            "Settings > Secrets and variables > Actions altina ekle.")
+        return 1
+    try:
+        ok = telegram_gonder(
+            "🔧 <b>BAĞLANTI TESTİ</b>\n\n"
+            "GitHub Actions → Telegram bağlantısı <b>çalışıyor.</b>\n\n"
+            "Bundan sonra SMC durumu değiştiğinde otomatik mesaj gelecek.\n"
+            "<i>Bu mesaj elle tetiklendi.</i>")
+        log(f"TEST: mesaj gonderildi -> {'BASARILI' if ok else 'BASARISIZ'}")
+        return 0 if ok else 1
+    except Exception as ex:
+        log(f"TEST BASARISIZ: {type(ex).__name__}: {ex}")
+        return 1
+
+
 def main():
+    if os.environ.get("SMC_TEST_MESAJI", "").lower() == "true":
+        return baglanti_testi()
+
     state = state_yukle()
 
     izlenecek = [("BTCUSDT", 60), ("NQ1!", 60)]

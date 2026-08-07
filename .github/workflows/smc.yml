@@ -5,6 +5,11 @@ on:
     # 15 dakikada bir. GitHub yogunlukta geciktirebilir.
     - cron: "*/15 * * * *"
   workflow_dispatch:        # elle calistirma butonu
+    inputs:
+      test_mesaji:
+        description: "Telegram baglantisini test et (durum degismese de mesaj at)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write           # durum dosyasini geri commit'lemek icin
@@ -21,6 +26,7 @@ jobs:
       TZ: Europe/Istanbul   # BIST seans kontrolu yerel saate bakiyor
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      SMC_TEST_MESAJI: ${{ inputs.test_mesaji }}
 
     steps:
       - uses: actions/checkout@v4
