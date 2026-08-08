@@ -2,8 +2,10 @@ name: SMC Watcher
 
 on:
   schedule:
-    # 15 dakikada bir. GitHub yogunlukta geciktirebilir.
-    - cron: "*/15 * * * *"
+    # Yalniz BIST seansinda: hafta ici 07:00-15:59 UTC (10:00-18:59 TSI).
+    # Seans disinda kosmak bosuna - hisse verisi zaten degismiyor.
+    # GitHub ucretsiz zamanlanmis isleri geciktirir; gercek aralik ~45-60 dk.
+    - cron: "*/15 7-15 * * 1-5"
   workflow_dispatch:        # elle calistirma butonu
     inputs:
       test_mesaji:
