@@ -24,6 +24,7 @@ uyarisi gonderir - mesaj gelmemesi "kurulum yok" anlamina gelmesin.
 import json
 import os
 import sys
+import time
 import urllib.request
 import urllib.parse
 from datetime import datetime, timezone
@@ -40,8 +41,24 @@ UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
 # ---------------------------------------------------------------------
 # TAKIP LISTESI — izlenecek hisseler. Degistirmek icin burayi duzenle.
+#
+# BIST30 olcegi. XU030'un RESMI bilesimi periyodik revize edilir ve bu
+# koddan dogrulanamaz; liste, dogrulanmis 43 aday arasindan ORTALAMA
+# GUNLUK ISLEM HACMI en yuksek 30 kod alinarak kuruldu (2026-08-08).
+# Her kodun Yahoo'dan veri dondugu tek tek test edildi.
+# KOZAL ve KOZAA disarida: Yahoo 404 doner, veri yok.
 # ---------------------------------------------------------------------
-TAKIP_LISTESI = ["ASELS", "TUPRS", "BIMAS"]
+TAKIP_LISTESI = [
+    "THYAO", "ASELS", "AKBNK", "ASTOR", "YKBNK", "TUPRS",
+    "ISCTR", "EREGL", "KCHOL", "BIMAS", "GARAN", "SAHOL",
+    "TCELL", "EKGYO", "SASA", "KRDMD", "TTKOM", "PETKM",
+    "SISE", "FROTO", "PGSUS", "HALKB", "MGROS", "HEKTS",
+    "TOASO", "VAKBN", "GUBRF", "TAVHL", "ENKAI", "BRSAN",
+]
+
+# Hisseler arasi bekleme. 30 hisse = 60 Yahoo istegi; arka arkaya
+# atinca saglayici bogazliyor (429). Kucuk bir ara turu kurtariyor.
+ISTEK_ARASI_SN = 0.4
 
 # Skor esikleri
 ESIK_ONAY = 70
@@ -391,7 +408,9 @@ def main():
         log("BIST kapali (seans disi) - tarama yapilmadi.")
         return 0
 
-    for ad in TAKIP_LISTESI:
+    for sira, ad in enumerate(TAKIP_LISTESI):
+        if sira:
+            time.sleep(ISTEK_ARASI_SN)
         onceki = state.get(ad, {})
         try:
             veri = KUR.veri_cek(ad)
@@ -427,13 +446,22 @@ def main():
         eski_durum = onceki.get("durum", "BASLANGIC")
         eski_skor = onceki.get("skor", 0)
 
-        if r["durum"] != eski_durum:
+        # Ilk goruste sessiz kal: yeni bir hisse listeye eklendiginde
+        # durumu zaten "BASLANGIC"tan degisir. 30 hisse icin bu, tek
+        # seferde 30 mesaj demekti - hem okunmaz hem Telegram bogazlar.
+        # Yalniz eyleme donuk durumlar ilk turda da bildirilir.
+        ilk_gorus = eski_durum == "BASLANGIC"
+        sessiz_ilk = ilk_gorus and r["durum"] in ("NOTR", "LONG_YOK")
+
+        if r["durum"] != eski_durum and not sessiz_ilk:
             try:
                 ok = telegram_gonder(mesaj_olustur(r, eski_durum, eski_skor))
                 log(f"{ad}: {eski_durum} -> {r['durum']} (skor {r['skor']}) "
                     f"TELEGRAM={'OK' if ok else 'HATA'}")
             except Exception as ex:
                 log(f"{ad}: Telegram gonderim hatasi: {ex}")
+        elif sessiz_ilk:
+            log(f"{ad}: ilk gorus {r['durum']} (skor {r['skor']}) - sessiz")
         else:
             log(f"{ad}: {r['durum']} degismedi "
                 f"(skor {eski_skor}->{r['skor']}, fiyat {r['fiyat']:.2f})")

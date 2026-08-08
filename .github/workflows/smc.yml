@@ -23,7 +23,7 @@ concurrency:
 jobs:
   kontrol:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 12      # 30 hisse x 2 Yahoo istegi; 5 dk yetmiyordu
     env:
       TZ: Europe/Istanbul   # BIST seans kontrolu yerel saate bakiyor
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
