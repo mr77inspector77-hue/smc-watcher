@@ -5,11 +5,11 @@
     "kaynak": "Coinbase",
     "htf_kaynak": "Kraken",
     "vekil": false,
-    "veri_yas_dk": 9,
+    "veri_yas_dk": 7,
     "durum": "NOTR",
     "skor": 21,
     "yon": "short",
-    "fiyat": 64998.6,
+    "fiyat": 65000.1,
     "bias": "BEARISH",
     "kurulum": "BOLGE YOK (yeterli genislikte)",
     "plan": null,
@@ -19,8 +19,8 @@
       57829.4,
       66950.0
     ],
-    "zaman_utc": "2026-08-08 09:00 UTC",
-    "guncelleme": "2026-08-08 09:08:30 UTC"
+    "zaman_utc": "2026-08-08 09:45 UTC",
+    "guncelleme": "2026-08-08 09:52:20 UTC"
   },
   "NQ1!": {
     "veri_sorunu": false,
