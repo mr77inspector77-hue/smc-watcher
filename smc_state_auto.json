@@ -4,11 +4,11 @@
     "htf_sorunu": false,
     "kaynak": "Coinbase",
     "vekil": false,
-    "veri_yas_dk": 17,
+    "veri_yas_dk": 15,
     "durum": "NOTR",
     "skor": 31,
     "yon": "short",
-    "fiyat": 64927.3,
+    "fiyat": 64918.5,
     "bias": "BEARISH",
     "kurulum": "BOLGE YOK (yeterli genislikte)",
     "plan": null,
@@ -18,8 +18,8 @@
       57829.4,
       66950.0
     ],
-    "zaman_utc": "2026-08-08 00:45 UTC",
-    "guncelleme": "2026-08-08 01:01:41 UTC"
+    "zaman_utc": "2026-08-08 02:45 UTC",
+    "guncelleme": "2026-08-08 02:59:49 UTC"
   },
   "NQ1!": {
     "veri_sorunu": false,
