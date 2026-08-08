@@ -116,7 +116,13 @@ def _birlestir(barlar, kat):
     return out
 
 
-def veri_cek(ad):
+# Son turda hangi ust periyot kaynagi kullanildi. Bulutta Binance engelli
+# oldugu icin bu bilgi olmadan "yedege dustu mu, dustuyse hangisine" sorusu
+# yanitsiz kaliyordu - durum dosyasina yazilip Telegram'da gosterilir.
+SON_HTF_KAYNAK = {}
+
+
+def veri_cek(ad, log=None):
     """Doner: {"1w":[...], "1d":[...], "4h":[...], "1h":[...]}
 
     BTC'de coklu kaynak (Binance -> Kraken -> Coinbase) kullanilir; tek
@@ -128,10 +134,14 @@ def veri_cek(ad):
         try:
             from veri_kaynaklari import htf_cek
         except Exception:
+            SON_HTF_KAYNAK[ad] = "Binance (tek kaynak)"
             return {"1w": _binance("1w", 120), "1d": _binance("1d", 300),
                     "4h": _binance("4h", 300), "1h": _binance("1h", 400)}
-        return htf_cek(ad)[0]
+        veri, etiket = htf_cek(ad, log=log)
+        SON_HTF_KAYNAK[ad] = etiket
+        return veri
     sembol = "NQ%3DF" if ad == "NQ1!" else f"{ad}.IS"
+    SON_HTF_KAYNAK[ad] = "Yahoo"
     saatlik = _yahoo(sembol, "1h", "2y" if ad == "NQ1!" else "730d")
     return {"1w": _yahoo(sembol, "1wk", "5y"),
             "1d": _yahoo(sembol, "1d", "2y"),

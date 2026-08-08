@@ -600,7 +600,8 @@ def mesaj_olustur(r, eski_durum, eski_skor):
         satirlar.append("")
 
     satirlar += [
-        f"<i>Kaynak: {r.get('kaynak', '-')} · {r['zaman_utc']}</i>",
+        f"<i>Kaynak: {r.get('kaynak', '-')} · seviyeler "
+        f"{KUR.SON_HTF_KAYNAK.get(r['ad'], '-')} · {r['zaman_utc']}</i>",
         "<i>Bu bir al/sat emri değildir — şartların durumudur.</i>",
     ]
     return "\n".join(satirlar)
@@ -814,7 +815,7 @@ def main():
 
         # --- ust periyot verisi (yon + bolge + plan burada kurulur)
         try:
-            htf = KUR.veri_cek(ad)
+            htf = KUR.veri_cek(ad, log=log)
         except Exception as ex:
             log(f"{ad}: UST PERIYOT VERISI ALINAMADI ({type(ex).__name__}: {ex})")
             if piyasa_acik_mi(ad) and not onceki_kayit.get("htf_sorunu"):
@@ -852,6 +853,7 @@ def main():
             "veri_sorunu": False,
             "htf_sorunu": False,
             "kaynak": kaynak,
+            "htf_kaynak": KUR.SON_HTF_KAYNAK.get(ad, "-"),
             "vekil": vekil,
             "veri_yas_dk": round(yas),
             "durum": r["durum"],
