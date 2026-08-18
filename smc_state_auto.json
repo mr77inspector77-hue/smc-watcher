@@ -14,45 +14,45 @@
       295.25,
       355.5
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:35 UTC"
+    "zaman_utc": "2026-08-18 10:14 UTC",
+    "guncelleme": "2026-08-18 10:29:58 UTC"
   },
   "ASELS": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
-    "durum": "LONG_SINYAL",
-    "skor": 75,
-    "fiyat": 382.0,
+    "durum": "LONG_HAZIRLIK",
+    "skor": 62,
+    "fiyat": 381.25,
     "yon": "BULLISH",
-    "kurulum": "BOLGEDE — GIRIS SARTLARI TAMAM",
+    "kurulum": "BEKLEMEDE",
     "plan": {
-      "giris": 381.5,
-      "stop": 376.55357142857144,
+      "giris": 378.25,
+      "stop": 372.01339285714283,
       "hedef": 407.5,
-      "rr": 5.26
+      "rr": 4.69
     },
     "bolge": "PREMIUM",
-    "eq": 372.25,
+    "eq": 371.5,
     "aralik": [
       331.75,
-      412.75
+      411.25
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:36 UTC"
+    "zaman_utc": "2026-08-18 10:14 UTC",
+    "guncelleme": "2026-08-18 10:29:59 UTC"
   },
   "AKBNK": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "LONG_HAZIRLIK",
-    "skor": 48,
-    "fiyat": 68.3499984741211,
+    "skor": 58,
+    "fiyat": 68.25,
     "yon": "BULLISH",
     "kurulum": "BEKLEMEDE",
     "plan": {
       "giris": 67.94999694824219,
-      "stop": 67.12589263916016,
-      "hedef": 69.6500015258789,
-      "rr": 2.06
+      "stop": 67.12053544180733,
+      "hedef": 70.05000305175781,
+      "rr": 2.53
     },
     "bolge": "DISCOUNT",
     "eq": 72.14999961853027,
@@ -60,22 +60,22 @@
       61.29999923706055,
       83.0
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:37 UTC"
+    "zaman_utc": "2026-08-18 10:14 UTC",
+    "guncelleme": "2026-08-18 10:30:00 UTC"
   },
   "ASTOR": {
     "veri_sorunu": false,
-    "veri_yas_dk": 17,
+    "veri_yas_dk": 15,
     "durum": "LONG_HAZIRLIK",
-    "skor": 68,
-    "fiyat": 322.75,
+    "skor": 55,
+    "fiyat": 321.75,
     "yon": "BULLISH",
-    "kurulum": "BOLGEDE — GIRIS SARTLARI TAMAM",
+    "kurulum": "BEKLEMEDE",
     "plan": {
-      "giris": 322.5,
-      "stop": 319.0982142857143,
+      "giris": 317.0,
+      "stop": 312.5669642857143,
       "hedef": 350.75,
-      "rr": 8.3
+      "rr": 7.61
     },
     "bolge": "PREMIUM",
     "eq": 312.0,
@@ -83,40 +83,40 @@
       271.0,
       353.0
     ],
-    "zaman_utc": "2026-08-18 09:31 UTC",
-    "guncelleme": "2026-08-18 09:48:38 UTC"
+    "zaman_utc": "2026-08-18 10:14 UTC",
+    "guncelleme": "2026-08-18 10:30:01 UTC"
   },
   "YKBNK": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "LONG_HAZIRLIK",
     "skor": 73,
-    "fiyat": 35.18000030517578,
+    "fiyat": 35.08000183105469,
     "yon": "BULLISH",
     "kurulum": "BEKLEMEDE",
     "plan": {
       "giris": 34.279998779296875,
-      "stop": 34.11392879486084,
+      "stop": 34.11142887387957,
       "hedef": 35.81999969482422,
-      "rr": 9.27
+      "rr": 9.14
     },
     "bolge": "DISCOUNT",
-    "eq": 37.5,
+    "eq": 37.3799991607666,
     "aralik": [
       30.799999237060547,
-      44.20000076293945
+      43.959999084472656
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:39 UTC"
+    "zaman_utc": "2026-08-18 10:14 UTC",
+    "guncelleme": "2026-08-18 10:30:01 UTC"
   },
   "TUPRS": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
-    "durum": "LONG_YOK",
+    "durum": "NOTR",
     "skor": 0,
-    "fiyat": 369.75,
-    "yon": "BEARISH",
-    "kurulum": "SHORT YON — BIST'te yalniz long alinir, atlandi",
+    "fiyat": 370.25,
+    "yon": "RANGE",
+    "kurulum": "YON YOK",
     "plan": null,
     "bolge": "PREMIUM",
     "eq": 294.8000030517578,
@@ -124,15 +124,15 @@
       215.10000610351562,
       374.5
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:40 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:03 UTC"
   },
   "ISCTR": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "LONG_YOK",
     "skor": 0,
-    "fiyat": 12.479999542236328,
+    "fiyat": 12.4399995803833,
     "yon": "BEARISH",
     "kurulum": "SHORT YON — BIST'te yalniz long alinir, atlandi",
     "plan": null,
@@ -142,15 +142,15 @@
       11.859999656677246,
       15.479999542236328
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:41 UTC"
+    "zaman_utc": "2026-08-18 10:14 UTC",
+    "guncelleme": "2026-08-18 10:30:04 UTC"
   },
   "EREGL": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "LONG_YOK",
     "skor": 0,
-    "fiyat": 37.81999969482422,
+    "fiyat": 37.63999938964844,
     "yon": "BEARISH",
     "kurulum": "SHORT YON — BIST'te yalniz long alinir, atlandi",
     "plan": null,
@@ -160,22 +160,22 @@
       36.2400016784668,
       45.099998474121094
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:42 UTC"
+    "zaman_utc": "2026-08-18 10:14 UTC",
+    "guncelleme": "2026-08-18 10:30:05 UTC"
   },
   "KCHOL": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "LONG_HAZIRLIK",
-    "skor": 48,
-    "fiyat": 206.39999389648438,
+    "skor": 56,
+    "fiyat": 206.0,
     "yon": "BULLISH",
     "kurulum": "BEKLEMEDE",
     "plan": {
       "giris": 205.1999969482422,
-      "stop": 203.4589225224086,
+      "stop": 203.44463675362724,
       "hedef": 209.5,
-      "rr": 2.47
+      "rr": 2.45
     },
     "bolge": "PREMIUM",
     "eq": 195.8000030517578,
@@ -183,15 +183,15 @@
       182.10000610351562,
       209.5
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:43 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:06 UTC"
   },
   "BIMAS": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "NOTR",
     "skor": 0,
-    "fiyat": 404.75,
+    "fiyat": 405.5,
     "yon": "RANGE",
     "kurulum": "YON YOK",
     "plan": null,
@@ -201,8 +201,8 @@
       353.25,
       409.5
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:44 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:07 UTC"
   },
   "GARAN": {
     "veri_sorunu": false,
@@ -214,54 +214,54 @@
     "kurulum": "YON YOK",
     "plan": null,
     "bolge": "DISCOUNT",
-    "eq": 132.0500030517578,
+    "eq": 134.0500030517578,
     "aralik": [
-      120.0,
-      144.10000610351562
+      123.0,
+      145.10000610351562
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:45 UTC"
+    "zaman_utc": "2026-08-18 10:14 UTC",
+    "guncelleme": "2026-08-18 10:30:07 UTC"
   },
   "SAHOL": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "LONG_HAZIRLIK",
     "skor": 66,
-    "fiyat": 88.80000305175781,
+    "fiyat": 88.75,
     "yon": "BULLISH",
     "kurulum": "BEKLEMEDE",
     "plan": {
       "giris": 85.3499984741211,
-      "stop": 83.14643151419503,
+      "stop": 83.14375277927944,
       "hedef": 91.69999694824219,
       "rr": 2.88
     },
     "bolge": "DISCOUNT",
-    "eq": 91.95000076293945,
+    "eq": 92.29999923706055,
     "aralik": [
       82.0999984741211,
-      101.80000305175781
+      102.5
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:46 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:08 UTC"
   },
   "TCELL": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "LONG_YOK",
     "skor": 0,
-    "fiyat": 103.69999694824219,
+    "fiyat": 103.5999984741211,
     "yon": "BEARISH",
     "kurulum": "SHORT YON — BIST'te yalniz long alinir, atlandi",
     "plan": null,
     "bolge": "DISCOUNT",
-    "eq": 106.02499771118164,
+    "eq": 107.42499923706055,
     "aralik": [
       98.94999694824219,
-      113.0999984741211
+      115.9000015258789
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:47 UTC"
+    "zaman_utc": "2026-08-18 10:14 UTC",
+    "guncelleme": "2026-08-18 10:30:09 UTC"
   },
   "EKGYO": {
     "veri_sorunu": false,
@@ -273,20 +273,20 @@
     "kurulum": "SHORT YON — BIST'te yalniz long alinir, atlandi",
     "plan": null,
     "bolge": "DISCOUNT",
-    "eq": 19.864999771118164,
+    "eq": 19.755000114440918,
     "aralik": [
       17.469999313354492,
-      22.260000228881836
+      22.040000915527344
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:48 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:10 UTC"
   },
   "SASA": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "LONG_YOK",
     "skor": 0,
-    "fiyat": 2.299999952316284,
+    "fiyat": 2.2899999618530273,
     "yon": "BEARISH",
     "kurulum": "SHORT YON — BIST'te yalniz long alinir, atlandi",
     "plan": null,
@@ -296,15 +296,15 @@
       2.2100000381469727,
       2.75
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:49 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:11 UTC"
   },
   "KRDMD": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "LONG_YOK",
     "skor": 0,
-    "fiyat": 44.15999984741211,
+    "fiyat": 44.13999938964844,
     "yon": "BEARISH",
     "kurulum": "SHORT YON — BIST'te yalniz long alinir, atlandi",
     "plan": null,
@@ -314,33 +314,33 @@
       35.7400016784668,
       46.720001220703125
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:50 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:12 UTC"
   },
   "TTKOM": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "NOTR",
     "skor": 0,
-    "fiyat": 53.54999923706055,
+    "fiyat": 53.5,
     "yon": "RANGE",
     "kurulum": "YON YOK",
     "plan": null,
     "bolge": "DISCOUNT",
-    "eq": 56.85000038146973,
+    "eq": 57.17500114440918,
     "aralik": [
-      50.04999923706055,
-      63.650001525878906
+      50.20000076293945,
+      64.1500015258789
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:51 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:13 UTC"
   },
   "PETKM": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "LONG_YOK",
     "skor": 0,
-    "fiyat": 19.469999313354492,
+    "fiyat": 19.549999237060547,
     "yon": "BEARISH",
     "kurulum": "SHORT YON — BIST'te yalniz long alinir, atlandi",
     "plan": null,
@@ -350,33 +350,33 @@
       18.200000762939453,
       23.200000762939453
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:52 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:14 UTC"
   },
   "SISE": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "LONG_YOK",
     "skor": 0,
-    "fiyat": 38.31999969482422,
+    "fiyat": 38.2599983215332,
     "yon": "BEARISH",
     "kurulum": "SHORT YON — BIST'te yalniz long alinir, atlandi",
     "plan": null,
     "bolge": "DISCOUNT",
-    "eq": 43.05999946594238,
+    "eq": 42.03000068664551,
     "aralik": [
       37.97999954223633,
-      48.13999938964844
+      46.08000183105469
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:54 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:15 UTC"
   },
   "FROTO": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "NOTR",
     "skor": 0,
-    "fiyat": 79.25,
+    "fiyat": 79.55000305175781,
     "yon": "RANGE",
     "kurulum": "YON YOK",
     "plan": null,
@@ -386,15 +386,15 @@
       75.05000305175781,
       89.80000305175781
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:55 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:16 UTC"
   },
   "PGSUS": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "NOTR",
     "skor": 0,
-    "fiyat": 149.89999389648438,
+    "fiyat": 149.39999389648438,
     "yon": "RANGE",
     "kurulum": "YON YOK",
     "plan": null,
@@ -404,33 +404,33 @@
       148.39999389648438,
       183.3000030517578
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:56 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:17 UTC"
   },
   "HALKB": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "LONG_YOK",
     "skor": 0,
-    "fiyat": 33.900001525878906,
+    "fiyat": 33.7599983215332,
     "yon": "BEARISH",
     "kurulum": "SHORT YON — BIST'te yalniz long alinir, atlandi",
     "plan": null,
     "bolge": "DISCOUNT",
-    "eq": 39.279998779296875,
+    "eq": 40.31999969482422,
     "aralik": [
       32.13999938964844,
-      46.41999816894531
+      48.5
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:57 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:18 UTC"
   },
   "MGROS": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "NOTR",
     "skor": 0,
-    "fiyat": 571.0,
+    "fiyat": 570.0,
     "yon": "RANGE",
     "kurulum": "YON YOK",
     "plan": null,
@@ -440,8 +440,8 @@
       550.0,
       712.5
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:58 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:19 UTC"
   },
   "HEKTS": {
     "veri_sorunu": false,
@@ -453,13 +453,13 @@
     "kurulum": "YON YOK",
     "plan": null,
     "bolge": "DISCOUNT",
-    "eq": 3.465000033378601,
+    "eq": 3.5100001096725464,
     "aralik": [
       2.759999990463257,
-      4.170000076293945
+      4.260000228881836
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:48:59 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:20 UTC"
   },
   "TOASO": {
     "veri_sorunu": false,
@@ -476,15 +476,15 @@
       257.0,
       358.25
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:49:00 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:21 UTC"
   },
   "VAKBN": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "LONG_YOK",
     "skor": 0,
-    "fiyat": 30.799999237060547,
+    "fiyat": 30.719999313354492,
     "yon": "BEARISH",
     "kurulum": "SHORT YON — BIST'te yalniz long alinir, atlandi",
     "plan": null,
@@ -494,56 +494,56 @@
       28.579999923706055,
       35.36000061035156
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:49:00 UTC"
+    "zaman_utc": "2026-08-18 10:14 UTC",
+    "guncelleme": "2026-08-18 10:30:23 UTC"
   },
   "GUBRF": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "LONG_HAZIRLIK",
     "skor": 65,
-    "fiyat": 425.25,
+    "fiyat": 425.75,
     "yon": "BULLISH",
     "kurulum": "BEKLEMEDE",
     "plan": {
       "giris": 419.0,
-      "stop": 413.75892857142856,
+      "stop": 413.7142857142857,
       "hedef": 456.75,
-      "rr": 7.2
+      "rr": 7.14
     },
     "bolge": "DISCOUNT",
-    "eq": 448.0,
+    "eq": 453.25,
     "aralik": [
       392.5,
-      503.5
+      514.0
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:49:01 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:24 UTC"
   },
   "TAVHL": {
     "veri_sorunu": false,
-    "veri_yas_dk": 15,
+    "veri_yas_dk": 16,
     "durum": "NOTR",
     "skor": 0,
-    "fiyat": 276.5,
+    "fiyat": 277.0,
     "yon": "RANGE",
     "kurulum": "YON YOK",
     "plan": null,
-    "bolge": "DISCOUNT",
-    "eq": 279.25,
+    "bolge": "PREMIUM",
+    "eq": 273.75,
     "aralik": [
       254.5,
-      304.0
+      293.0
     ],
-    "zaman_utc": "2026-08-18 09:33 UTC",
-    "guncelleme": "2026-08-18 09:49:02 UTC"
+    "zaman_utc": "2026-08-18 10:14 UTC",
+    "guncelleme": "2026-08-18 10:30:24 UTC"
   },
   "ENKAI": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "LONG_YOK",
     "skor": 0,
-    "fiyat": 80.44999694824219,
+    "fiyat": 80.9000015258789,
     "yon": "BEARISH",
     "kurulum": "SHORT YON — BIST'te yalniz long alinir, atlandi",
     "plan": null,
@@ -553,25 +553,25 @@
       78.5,
       95.3499984741211
     ],
-    "zaman_utc": "2026-08-18 09:34 UTC",
-    "guncelleme": "2026-08-18 09:49:03 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:25 UTC"
   },
   "BRSAN": {
     "veri_sorunu": false,
     "veri_yas_dk": 15,
     "durum": "NOTR",
     "skor": 0,
-    "fiyat": 654.0,
+    "fiyat": 653.0,
     "yon": "RANGE",
     "kurulum": "YON YOK",
     "plan": null,
     "bolge": "PREMIUM",
-    "eq": 587.0,
+    "eq": 594.25,
     "aralik": [
-      504.5,
+      519.0,
       669.5
     ],
-    "zaman_utc": "2026-08-18 09:34 UTC",
-    "guncelleme": "2026-08-18 09:49:03 UTC"
+    "zaman_utc": "2026-08-18 10:15 UTC",
+    "guncelleme": "2026-08-18 10:30:26 UTC"
   }
 }
