@@ -2,6 +2,10 @@
 # -*- coding: utf-8 -*-
 """Kripto SMC izleyicisi — 7/24 otomatik tarama + Telegram sinyali.
 
+Bilgisayardaki panelin (localhost:8765, kripto_jev_bot) Telegram sinyal
+sisteminin BULUT kopyasi: ayni coinler, ayni motor, ayni aynalama. Bilgisayar
+kapaliyken de calissin diye GitHub Actions'ta kosar.
+
 BIST izleyicisinin (smc_watch.py) kripto karsiligi. Ayni SMC motoru
 (kurulum.py: yapi yonu, FVG, likidite, supurme) ve ayni skor kurallari;
 farklar:
@@ -37,7 +41,7 @@ STATE_PATH = os.path.join(BASE, "kripto_state.json")
 LOG_PATH = os.path.join(BASE, "kripto_watch.log")
 
 ISTEK_ARASI_SN = 0.3
-LIMIT = 300              # her periyottan son 300 mum (FVG 80, likidite 120 bar bakar)
+LIMIT = 200              # panelle ayni: her periyottan son 200 mum
 
 # 1H barin bu yastan eskiyse veri bayat sayilir. Kriptoda seans yok:
 # forming bar en fazla 60 dk; fazlasi kaynak sorunudur.
@@ -130,131 +134,38 @@ def veri_cek(coin):
 # ---------------------------------------------------------------- kurulum
 
 
-def kurulum_kur(ad, veri):
-    """kurulum.kurulum_kur'un iki yonlu hali. Long tarafi birebir aynidir;
-    short tarafi aynanin tersidir: bolge fiyatin USTUNDE bear FVG, stop
-    bolgenin ustunde, hedef asagidaki alinmamis likidite."""
-    fiyat = veri["1h"][-1]["c"]
-    a1 = KUR.atr(veri["1h"])
-    yon, yon_sebep, yon_guc = KUR.yon_belirle(veri)
-    sonuc = {"ad": ad, "fiyat": fiyat, "yon": yon, "yon_sebep": yon_sebep,
-             "yon_guc": yon_guc, "atr_1h": a1, "durum": "YON YOK",
-             "bolge": None, "plan": None, "supurme": None}
-    if yon == "RANGE" or not a1:
-        return sonuc
-
-    long_mu = yon == "BULLISH"
-    sonuc["supurme"] = KUR.supurme_katmani(veri, yon)
-
-    zonlar = KUR.bolgeler(veri, yon, a1)
-    if not zonlar:
-        sonuc["durum"] = "BOLGE YOK (yeterli genislikte)"
-        return sonuc
-    z = zonlar[0]
-    sonuc["bolge"] = z
-    ustler, altlar = KUR.likidite_seviyeleri(veri["4h"])
-
-    if long_mu:
-        giris = min(z["ust"], fiyat)
-        stop = z["alt"] - a1 * KUR.STOP_PAYI
-        aday = [s for s in ustler if s > giris]          # artan sirada
-    else:
-        giris = max(z["alt"], fiyat)
-        stop = z["ust"] + a1 * KUR.STOP_PAYI
-        aday = [s for s in altlar if s < giris]          # azalan sirada
-    hedef = aday[0] if aday else None
-    if hedef is None:
-        sonuc["durum"] = "HEDEF YOK"
-        return sonuc
-
-    risk = abs(giris - stop)
-    taban = a1 * KUR.ASGARI_STOP
-    genisletildi = risk < taban
-    if genisletildi:
-        risk = taban
-        stop = giris - risk if long_mu else giris + risk
-
-    odul = abs(hedef - giris)
-    rr = odul / risk if risk > 0 else 0
-    sonuc["plan"] = {"giris": giris, "stop": stop, "hedef": hedef,
-                     "risk": risk, "odul": odul, "rr": rr,
-                     "stop_genisletildi": genisletildi}
-    if rr < KUR.ASGARI_RR:
-        sonuc["durum"] = f"RR YETERSIZ ({rr:.1f})"
-        return sonuc
-    if rr > KUR.AZAMI_RR:
-        sonuc["durum"] = f"RR SUPHELI ({rr:.1f}) — hedef fazla uzak"
-        return sonuc
-
-    pay = a1 * KUR.BOLGE_PAYI
-    icinde = (z["alt"] - pay) <= fiyat <= (z["ust"] + pay)
-    sonuc["durum"] = "BOLGEDE — GIRIS SARTLARI TAMAM" if icinde else "BEKLEMEDE"
-    return sonuc
-
-
-def skorla(kur, fiyat, eq, long_mu):
-    """smc_watch.skorla ile ayni agirliklar; konum katmani yone gore:
-    long DISCOUNT'ta, short PREMIUM'da puan alir."""
-    A = W.AGIRLIK
-    d = {"yon": A["yon"] * {"uyumlu": 1.0, "notr": 0.75,
-                            "zayif": 0.4}.get(kur.get("yon_guc"), 0.0)}
-    if kur["bolge"] and kur["durum"].startswith("BOLGEDE"):
-        d["bolge"] = A["bolge"]
-    elif kur["bolge"]:
-        d["bolge"] = A["bolge"] * 0.5
-    else:
-        d["bolge"] = 0
-    p = kur.get("plan")
-    rr = p["rr"] if p else 0
-    d["rr"] = A["rr"] if rr >= 3.0 else (A["rr"] * 0.66 if rr >= KUR.ASGARI_RR else 0)
-    sp = kur.get("supurme") or {"lehte": [], "aleyhte": []}
-    if sp["lehte"]:
-        g = sp["lehte"][0]["guc"]
-        if sp["aleyhte"]:
-            g *= W.ALEYHTE_CARPAN
-        d["supurme"] = A["supurme"] * g
-    else:
-        d["supurme"] = 0
-    if eq is None:
-        d["pd"] = 0
-    else:
-        d["pd"] = A["pd"] if ((fiyat < eq) if long_mu else (fiyat > eq)) else 0
-    return round(sum(d.values())), {k: (round(v), A[k]) for k, v in d.items()}
+def _ayna(bars):
+    return [{"t": b["t"], "o": -b["o"], "h": -b["l"], "l": -b["h"],
+             "c": -b["c"], "v": b["v"]} for b in bars]
 
 
 def degerlendir(ad, veri):
-    kur = kurulum_kur(ad, veri)
-    fiyat = kur["fiyat"]
-    if len(veri["1d"]) >= 40:
-        hi, lo, eq = W.dealing_range(veri["1d"], 40)
-    else:
-        hi = lo = eq = None
-    long_mu = kur["yon"] == "BULLISH"
-    taraf = "LONG" if long_mu else "SHORT"
-    r = {
-        "ad": ad, "fiyat": fiyat, "yon_smc": kur["yon"], "taraf": taraf,
-        "yon_sebep": kur["yon_sebep"], "kur_durum": kur["durum"],
-        "bolge_fvg": kur["bolge"], "plan": kur["plan"],
-        "supurme": kur["supurme"], "aralik_tepe": hi, "aralik_dip": lo,
-        "eq": eq, "detay": {}, "skor": 0,
-        "bolge": ("-" if eq is None else ("DISCOUNT" if fiyat < eq else "PREMIUM")),
-        "zaman_utc": datetime.fromtimestamp(veri["1h"][-1]["t"], timezone.utc)
-                             .strftime("%Y-%m-%d %H:%M UTC"),
-    }
-    if kur["yon"] == "RANGE":
-        r["durum"] = "NOTR"
-        return r
-    skor, detay = skorla(kur, fiyat, eq, long_mu)
-    r["skor"], r["detay"] = skor, detay
-    p = kur["plan"]
-    alinabilir = bool(p) and p["rr"] >= KUR.ASGARI_RR and \
-        kur["durum"].startswith("BOLGEDE")
-    if skor >= W.ESIK_ONAY and alinabilir:
-        r["durum"] = f"{taraf}_SINYAL"
-    elif skor >= W.ESIK_HAZIRLIK:
-        r["durum"] = f"{taraf}_HAZIRLIK"
-    else:
-        r["durum"] = "NOTR"
+    """Bilgisayardaki panelin (kripto_jev_bot/smc/tarayici.py) yontemiyle
+    BIREBIR ayni: gunluk yapi BEARISH ise fiyatlar aynalanir, BIST'in long
+    motoru (smc_watch.degerlendir) kosar, sonuc gercek fiyatlara cevrilir.
+    Kural tektir - short icin ayri motor yok."""
+    yon = KUR.yon_belirle(veri)[0]
+    short = yon == "BEARISH"
+    r = W.degerlendir(ad, {k: _ayna(b) for k, b in veri.items()} if short else veri)
+    r["taraf"] = "SHORT" if short else "LONG" if yon == "BULLISH" else "YOK"
+    if short:
+        r["fiyat"] = -r["fiyat"]
+        r["durum"] = {"LONG_SINYAL": "SHORT_SINYAL",
+                      "LONG_HAZIRLIK": "SHORT_HAZIRLIK"}.get(r["durum"], r["durum"])
+        if r["plan"]:
+            r["plan"] = dict(r["plan"], giris=-r["plan"]["giris"],
+                             stop=-r["plan"]["stop"], hedef=-r["plan"]["hedef"])
+        if r["bolge_fvg"]:
+            z = r["bolge_fvg"]
+            r["bolge_fvg"] = dict(z, alt=-z["ust"], ust=-z["alt"])
+        if r["eq"] is not None:
+            r["eq"] = -r["eq"]
+            r["bolge"] = "PREMIUM" if r["bolge"] == "DISCOUNT" else "DISCOUNT"
+        sp = r["supurme"] or {"lehte": [], "aleyhte": []}
+        r["supurme"] = {k: [dict(x, seviye=-x["seviye"]) for x in v]
+                        for k, v in sp.items()}
+        r["yon_sebep"] = (r["yon_sebep"].replace("BULLISH", "@@")
+                          .replace("BEARISH", "BULLISH").replace("@@", "BEARISH"))
     return r
 
 
