@@ -1,0 +1,113 @@
+{
+  "not": "Takip edilen kripto ciftleri (USDT vadeli). Eklemek/cikarmak icin bu listeyi duzenle. Kaynak: kripto_jev_bot/config/evren.json (2026-09-30). binance = yedek kaynak (spot), yoksa atlanir.",
+  "coinler": [
+    {
+      "coin": "BTC",
+      "bybit": "BTCUSDT",
+      "okx": "BTC-USDT-SWAP",
+      "binance": "BTCUSDT"
+    },
+    {
+      "coin": "ETH",
+      "bybit": "ETHUSDT",
+      "okx": "ETH-USDT-SWAP",
+      "binance": "ETHUSDT"
+    },
+    {
+      "coin": "SOL",
+      "bybit": "SOLUSDT",
+      "okx": "SOL-USDT-SWAP",
+      "binance": "SOLUSDT"
+    },
+    {
+      "coin": "XRP",
+      "bybit": "XRPUSDT",
+      "okx": "XRP-USDT-SWAP",
+      "binance": "XRPUSDT"
+    },
+    {
+      "coin": "BNB",
+      "bybit": "BNBUSDT",
+      "okx": "BNB-USDT-SWAP",
+      "binance": "BNBUSDT"
+    },
+    {
+      "coin": "HYPE",
+      "bybit": "HYPEUSDT",
+      "okx": "HYPE-USDT-SWAP",
+      "binance": "HYPEUSDT"
+    },
+    {
+      "coin": "LINK",
+      "bybit": "LINKUSDT",
+      "okx": "LINK-USDT-SWAP",
+      "binance": "LINKUSDT"
+    },
+    {
+      "coin": "NEAR",
+      "bybit": "NEARUSDT",
+      "okx": "NEAR-USDT-SWAP",
+      "binance": "NEARUSDT"
+    },
+    {
+      "coin": "AVAX",
+      "bybit": "AVAXUSDT",
+      "okx": "AVAX-USDT-SWAP",
+      "binance": "AVAXUSDT"
+    },
+    {
+      "coin": "SUI",
+      "bybit": "SUIUSDT",
+      "okx": "SUI-USDT-SWAP",
+      "binance": "SUIUSDT"
+    },
+    {
+      "coin": "AAVE",
+      "bybit": "AAVEUSDT",
+      "okx": "AAVE-USDT-SWAP",
+      "binance": "AAVEUSDT"
+    },
+    {
+      "coin": "ONDO",
+      "bybit": "ONDOUSDT",
+      "okx": "ONDO-USDT-SWAP",
+      "binance": "ONDOUSDT"
+    },
+    {
+      "coin": "ENA",
+      "bybit": "ENAUSDT",
+      "okx": "ENA-USDT-SWAP",
+      "binance": "ENAUSDT"
+    },
+    {
+      "coin": "UNI",
+      "bybit": "UNIUSDT",
+      "okx": "UNI-USDT-SWAP",
+      "binance": "UNIUSDT"
+    },
+    {
+      "coin": "ZEC",
+      "bybit": "ZECUSDT",
+      "okx": "ZEC-USDT-SWAP",
+      "binance": "ZECUSDT"
+    },
+    {
+      "coin": "QNT",
+      "bybit": "QNTUSDT",
+      "okx": "QNT-USDT-SWAP",
+      "binance": "QNTUSDT"
+    },
+    {
+      "coin": "HBAR",
+      "bybit": "HBARUSDT",
+      "okx": "HBAR-USDT-SWAP",
+      "binance": "HBARUSDT"
+    },
+    {
+      "coin": "PUMP",
+      "bybit": "PUMPFUNUSDT",
+      "okx": "PUMP-USDT-SWAP",
+      "binance": "PUMPUSDT"
+    }
+  ]
+}

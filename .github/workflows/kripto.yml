@@ -1,0 +1,57 @@
+name: Kripto SMC Watcher
+
+on:
+  schedule:
+    # 7/24 - kripto piyasasi kapanmaz. GitHub ucretsiz zamanlanmis isleri
+    # geciktirir; gercek aralik genelde 15-60 dk arasidir.
+    - cron: "7,22,37,52 * * * *"
+  workflow_dispatch:        # elle calistirma butonu
+    inputs:
+      test_mesaji:
+        description: "Telegram baglantisini test et (sinyal olmasa da mesaj at)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write           # durum dosyasini geri commit'lemek icin
+
+concurrency:
+  group: kripto-watcher     # ust uste calismasin
+  cancel-in-progress: false
+
+jobs:
+  kontrol:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      SMC_TEST_MESAJI: ${{ inputs.test_mesaji }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Kripto SMC kontrolu
+        run: python kripto_watch.py
+
+      - name: Durumu kaydet
+        if: always()
+        run: |
+          git config user.name  "smc-watcher"
+          git config user.email "actions@github.com"
+          git add kripto_state.json || true
+          if git diff --staged --quiet; then
+            echo "degisiklik yok"
+            exit 0
+          fi
+          git commit -m "kripto durum guncellendi [skip ci]"
+          # BIST isi ayni repoya yazar; arada onun commit'i girmisse ustune al
+          for i in 1 2 3; do
+            git pull --rebase -q && git push && exit 0
+            sleep 5
+          done
+          exit 1

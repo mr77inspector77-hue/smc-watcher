@@ -446,22 +446,19 @@ def main():
         eski_durum = onceki.get("durum", "BASLANGIC")
         eski_skor = onceki.get("skor", 0)
 
-        # Ilk goruste sessiz kal: yeni bir hisse listeye eklendiginde
-        # durumu zaten "BASLANGIC"tan degisir. 30 hisse icin bu, tek
-        # seferde 30 mesaj demekti - hem okunmaz hem Telegram bogazlar.
-        # Yalniz eyleme donuk durumlar ilk turda da bildirilir.
-        ilk_gorus = eski_durum == "BASLANGIC"
-        sessiz_ilk = ilk_gorus and r["durum"] in ("NOTR", "LONG_YOK")
-
-        if r["durum"] != eski_durum and not sessiz_ilk:
+        # Kullanici karari (2026-10-03): Telegram'a YALNIZ sinyal gider.
+        # "Kurulum yok", "hazirlik", "long sartlari yok" mesaj olarak gitmez;
+        # durumlari log'a ve state'e yazilmaya devam eder.
+        if r["durum"] == "LONG_SINYAL" and eski_durum != "LONG_SINYAL":
             try:
                 ok = telegram_gonder(mesaj_olustur(r, eski_durum, eski_skor))
                 log(f"{ad}: {eski_durum} -> {r['durum']} (skor {r['skor']}) "
                     f"TELEGRAM={'OK' if ok else 'HATA'}")
             except Exception as ex:
                 log(f"{ad}: Telegram gonderim hatasi: {ex}")
-        elif sessiz_ilk:
-            log(f"{ad}: ilk gorus {r['durum']} (skor {r['skor']}) - sessiz")
+        elif r["durum"] != eski_durum:
+            log(f"{ad}: {eski_durum} -> {r['durum']} (skor {r['skor']}) "
+                f"- sinyal degil, mesaj yok")
         else:
             log(f"{ad}: {r['durum']} degismedi "
                 f"(skor {eski_skor}->{r['skor']}, fiyat {r['fiyat']:.2f})")

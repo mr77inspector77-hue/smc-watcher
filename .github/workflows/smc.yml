@@ -52,5 +52,7 @@ jobs:
             echo "degisiklik yok"
           else
             git commit -m "durum guncellendi [skip ci]"
+            # kripto isi ayni repoya yazar; arada onun commit'i girmisse ustune al
+            git pull --rebase -q || true
             git push
           fi
