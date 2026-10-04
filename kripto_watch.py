@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Kripto SMC izleyicisi — 7/24 otomatik tarama + Telegram sinyali.
+"""[DEVRE DISI 2026-10-04 — kripto artik Cloudflare Worker'da: C:\Users\USER\projects\kripto-sinyal-worker
+ (SMC + Supurme+CISD+FVG + Supurme+IFVG, gercek 5 dk). Bu dosya yalniz elle `--kuru` denemesi icin duruyor.]
+
+Kripto SMC izleyicisi — 7/24 otomatik tarama + Telegram sinyali.
 
 Bilgisayardaki panelin (localhost:8765, kripto_jev_bot) Telegram sinyal
 sisteminin BULUT kopyasi: ayni coinler, ayni motor, ayni aynalama. Bilgisayar
